@@ -1,0 +1,28 @@
+version: '3'
+services:
+  db:
+    restart: always
+    image: mysql:5.7
+    volumes:
+      - mysql-db:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: root
+    ports:
+      - 3306:3306
+
+  app:
+    restart: always
+    build: .
+    command: rails s -b 0.0.0.0 -p 3000
+    # command: bin/dev # tailwindのbuildプロセスを起動しておきたいが、このコマンドだと落ちる
+    volumes:
+      - .:/myapp
+      - bundle:/usr/local/bundle
+    ports:
+      - 3000:3000
+    depends_on:
+      - db
+volumes:
+  mysql-db:
+  bundle:
