@@ -57,6 +57,11 @@ class MealsController < ApplicationController
     end
   end
 
+  def import
+    Meal.import(params[:file])
+    redirect_to root_url
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_meal

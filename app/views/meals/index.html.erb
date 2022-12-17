@@ -2,6 +2,11 @@
 
 <h1>Meals</h1>
 
+<%= form_tag import_meals_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "CSVからスケジュールを登録" %>
+<% end %>
+
 <div id="meals">
   <% @meals.each do |meal| %>
     <%= render meal %>
