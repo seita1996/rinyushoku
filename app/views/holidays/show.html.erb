@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @holiday %>
+
+<div>
+  <%= link_to "Edit this holiday", edit_holiday_path(@holiday) %> |
+  <%= link_to "Back to holidays", holidays_path %>
+
+  <%= button_to "Destroy this holiday", @holiday, method: :delete %>
+</div>

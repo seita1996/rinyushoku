@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :holidays do
+    collection {post :bulk_update}
+  end
   root to: 'meals#index'
   resources :meals do
     collection {post :import}
