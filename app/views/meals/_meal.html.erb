@@ -5,13 +5,23 @@
   </p>
 
   <p>
-    <strong>Ordinal number:</strong>
+    <strong>回食:</strong>
     <%= meal.ordinal_number %>
   </p>
 
   <p>
     <strong>Date:</strong>
     <%= meal.date %>
+  </p>
+
+  <p>
+    <strong>食材:</strong>
+    <%= meal.meal_foods.map { |mf| "#{mf.food.name}#{mf.amount}" }.join(' ') %>
+  </p>
+
+  <p>
+    <strong>初めて食べる食材がある:</strong>
+    <%= meal.meal_foods.inject(false) { |result, mf| result && mf.debut } %>
   </p>
 
 </div>
