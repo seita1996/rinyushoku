@@ -59,6 +59,8 @@ class MealsController < ApplicationController
 
   def import
     Meal.import(params[:file])
+    MealFood.update_debut_flag
+    Meal.update_date(params[:start_date])
     redirect_to root_url
   end
 

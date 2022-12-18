@@ -3,16 +3,19 @@ class Meal < ApplicationRecord
   has_many :foods, :through => :meal_foods
 
   def self.import(file)
+    # テーブルのデータを全削除
+    MealFood.destroy_all
+    Food.destroy_all
+    Meal.destroy_all
+
     # CSVヘッダのday以外のセルをfoodsテーブルへインポート
     food_name_arr = CSV.read(file.path)[0].drop(1)
     # foods = food_name_arr.map { |food| JSON.parse("{\"name\": \"#{food}\"}") }
     foods = food_name_arr.map { |food| {name: food} }
-    Food.destroy_all
     Food.insert_all(foods)
 
     # CSVのbodyをmeal_foodsテーブルへインポート
     meals = []
-    current_day = Date.today - 1 # ループに入ってすぐ+1するため-1しておく。TODO: 引数の日付に置き換え
     before_row_day = -1
     ordinal_number = 1
     CSV.foreach(file.path, headers: true) do |row|
@@ -22,13 +25,11 @@ class Meal < ApplicationRecord
       else
         # dayの値が前の行と異なる場合（1回食だけの日）
         ordinal_number = 1
-        current_day += 1
       end
-      meal = {day: row['day'], ordinal_number: ordinal_number, date: current_day}
+      meal = {day: row['day'], ordinal_number: ordinal_number}
       meals << meal
       before_row_day = row['day'].to_i
     end
-    Meal.destroy_all
     Meal.insert_all(meals)
 
     # CSVのbodyをmeal_foodsテーブルへインポート
@@ -42,7 +43,6 @@ class Meal < ApplicationRecord
       else
         # dayの値が前の行と異なる場合（1回食だけの日）
         ordinal_number = 1
-        current_day += 1
       end
       eaten_foods_at_this_meal = row.select { |key, value| key != 'day' && value != nil }
       eaten_foods_at_this_meal.each do |food|
@@ -51,8 +51,33 @@ class Meal < ApplicationRecord
       end
       before_row_day = row['day'].to_i
     end
-    logger.debug(meal_foods)
-    MealFood.destroy_all
     MealFood.insert_all(meal_foods)
+  end
+
+  def self.update_date(start_date)
+    if start_date.empty?
+      start_date = Date.today
+    else
+      start_date = Date.parse(start_date)
+    end
+    current_date = start_date - 1 # ループに入ってすぐ+1するため-1しておく
+    Meal.all.each do |meal|
+      # 2回食以降は同日
+      current_date += 1 if meal.ordinal_number == 1
+
+      # 初めて食べる食材があり、当日が日曜または祝日ならば日付をインクリメント（日曜祝日以外の日になるまで繰り返す）
+      # TODO: 日付をインクリメントする条件に「指定された日付」を追加
+      while meal.has_debut_food && (current_date.wday == 0 || HolidayJp.holiday?(current_date)) do
+        current_date += 1
+      end
+      meal.date = current_date
+
+      # TODO: bulk update
+      meal.save
+    end
+  end
+
+  def has_debut_food
+    self.meal_foods.inject(false) { |result, mf| result || mf.debut }
   end
 end

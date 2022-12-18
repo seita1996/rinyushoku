@@ -21,7 +21,7 @@
 
   <p>
     <strong>初めて食べる食材がある:</strong>
-    <%= meal.meal_foods.inject(false) { |result, mf| result && mf.debut } %>
+    <%= meal.has_debut_food %>
   </p>
 
 </div>

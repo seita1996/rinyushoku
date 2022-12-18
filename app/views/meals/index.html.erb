@@ -4,6 +4,8 @@
 
 <%= form_tag import_meals_path, multipart: true do %>
   <%= file_field_tag :file %>
+  開始日
+  <%= date_field_tag :start_date %>
   <%= submit_tag "CSVからスケジュールを登録" %>
 <% end %>
 
