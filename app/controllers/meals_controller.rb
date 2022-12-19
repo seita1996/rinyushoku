@@ -64,6 +64,34 @@ class MealsController < ApplicationController
     redirect_to root_url
   end
 
+  def sum_foods
+    # TODO: ロジックをController外へ
+
+    # 今日を含めた7日間のスケジュールを表示
+    @from =
+      if params[:from].nil? || params[:from].empty?
+        Date.today
+      else
+        Date.parse(params[:from])
+      end
+    @to =
+      if params[:to].nil? || params[:to].empty?
+        @from + 6
+      else
+        Date.parse(params[:to])
+      end
+    @meals = Meal.filled_meals(@from, @to)
+
+    # 今日を含めて7日間の食材をリスト化
+    @foods = {}
+    @meals.each do |meal|
+      meal.meal_foods.each do |mf|
+        @foods[mf.food.name] = [] unless @foods.key?(mf.food.name) # 食材がキーに存在しなければ空の配列を作成
+        @foods[mf.food.name] << mf.amount # 同じ食材を配列へ
+      end
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_meal

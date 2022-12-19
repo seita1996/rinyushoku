@@ -9,6 +9,8 @@
   <%= submit_tag "CSVからスケジュールを登録" %>
 <% end %>
 
+<%= link_to "期間を指定して必要な食材を集計", action: "sum_foods" %>
+
 <div id="meals">
   <% @meals.each do |meal| %>
     <%= render meal %>
