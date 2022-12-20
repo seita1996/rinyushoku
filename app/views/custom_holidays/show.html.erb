@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @custom_holiday %>
+
+<div>
+  <%= link_to "Edit this custom holiday", edit_custom_holiday_path(@custom_holiday) %> |
+  <%= link_to "Back to custom holidays", custom_holidays_path %>
+
+  <%= button_to "Destroy this custom holiday", @custom_holiday, method: :delete %>
+</div>
