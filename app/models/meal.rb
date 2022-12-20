@@ -97,9 +97,8 @@ class Meal < ApplicationRecord
       # 2回食以降は同日
       current_date += 1 if meal.ordinal_number == 1
 
-      # 初めて食べる食材があり、当日が日曜または祝日ならば日付をインクリメント（日曜祝日以外の日になるまで繰り返す）
-      # TODO: 日付をインクリメントする条件に「指定された日付」を追加
-      while meal.has_debut_food && (current_date.wday == 0 || HolidayJp.holiday?(current_date)) do
+      # 初めて食べる食材があり、当日が日曜または祝日またはカスタム休日ならば日付をインクリメント（休日以外の日になるまで繰り返す）
+      while meal.has_debut_food && (current_date.wday == 0 || HolidayJp.holiday?(current_date) || CustomHoliday.include?(current_date)) do
         current_date += 1
       end
       meal.date = current_date
