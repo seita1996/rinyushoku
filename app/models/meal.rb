@@ -86,6 +86,17 @@ class Meal < ApplicationRecord
     result
   end
 
+  def self.sum_foods(meals)
+    foods = {}
+    meals.each do |meal|
+      meal.meal_foods.each do |mf|
+        foods[mf.food.name] = [] unless foods.key?(mf.food.name) # 食材がキーに存在しなければ空の配列を作成
+        foods[mf.food.name] << mf.amount # 同じ食材を配列へ
+      end
+    end
+    return foods
+  end
+
   def self.update_date(start_date)
     if start_date.empty?
       start_date = Date.today

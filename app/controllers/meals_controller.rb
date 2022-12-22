@@ -57,6 +57,7 @@ class MealsController < ApplicationController
     end
   end
 
+  # POST /meals/import
   def import
     Meal.import(params[:file])
     MealFood.update_debut_flag
@@ -64,32 +65,11 @@ class MealsController < ApplicationController
     redirect_to root_url
   end
 
+  # GET /meals/sum_foods
   def sum_foods
-    # TODO: ロジックをController外へ
-
-    # 今日を含めた7日間のスケジュールを表示
-    @from =
-      if params[:from].nil? || params[:from].empty?
-        Date.today
-      else
-        Date.parse(params[:from])
-      end
-    @to =
-      if params[:to].nil? || params[:to].empty?
-        @from + 6
-      else
-        Date.parse(params[:to])
-      end
+    set_date_range
     @meals = Meal.filled_meals(@from, @to)
-
-    # 今日を含めて7日間の食材をリスト化
-    @foods = {}
-    @meals.each do |meal|
-      meal.meal_foods.each do |mf|
-        @foods[mf.food.name] = [] unless @foods.key?(mf.food.name) # 食材がキーに存在しなければ空の配列を作成
-        @foods[mf.food.name] << mf.amount # 同じ食材を配列へ
-      end
-    end
+    @foods = Meal.sum_foods(@meals)
   end
 
   private
@@ -101,5 +81,21 @@ class MealsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def meal_params
       params.require(:meal).permit(:day, :ordinal_number, :date)
+    end
+
+    def set_date_range
+      # デフォルト：今日を含めた7日間のスケジュールを表示
+      @from =
+        if params[:from].nil? || params[:from].empty?
+          Date.today
+        else
+          Date.parse(params[:from])
+        end
+      @to =
+        if params[:to].nil? || params[:to].empty?
+          @from + 6
+        else
+          Date.parse(params[:to])
+        end
     end
 end
