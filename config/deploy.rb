@@ -45,17 +45,5 @@ set :rails_env, "production"
 
 set :log_level, :debug
 
-# namespace :db do
-#   task :configure do
-#     set :database_username do
-#       "deploy"
-#     end
-
-#     set :database_password do
-#       Capistrano::CLI.password_prompt "Database Password: "
-#     end
-#   end
-# end
-
 # puma
 set :puma_service_unit_name, 'puma.service'
