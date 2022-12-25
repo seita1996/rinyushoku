@@ -3,4 +3,6 @@ inherit_from: .rubocop_todo.yml
 AllCops:
   TargetRubyVersion: "3.1"
   Exclude:
-    - spec/spec_helper.rb
+    - spec/**/*
+    - tmp/**/*
+    - vendor/**/*
