@@ -17,8 +17,6 @@ jobs:
           MYSQL_DATABASE: root
           MYSQL_ROOT_PASSWORD: password
         options: --health-cmd "mysqladmin ping" --health-interval 10s --health-timeout 5s --health-retries 10
-    env:
-      DB_HOST: 127.0.0.1
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -32,6 +30,7 @@ jobs:
           bundle install --jobs 4 --retry 3 --path vendor/bundle
       - name: Database create and migrate
         run: |
+          cp config/database.yml.ci config/database.yml
           bundle exec rails db:create RAILS_ENV=test
           bundle exec rails db:migrate RAILS_ENV=test
       - name: Run rspec
