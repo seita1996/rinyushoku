@@ -1,9 +1,3 @@
-# This workflow uses actions that are not certified by GitHub.  They are
-# provided by a third-party and are governed by separate terms of service,
-# privacy policy, and support documentation.
-#
-# This workflow will install a prebuilt Ruby version, install dependencies, and
-# run tests and linters.
 name: "Ruby on Rails CI"
 on:
   push:
@@ -11,8 +5,9 @@ on:
   pull_request:
     branches: [ "main" ]
 jobs:
-  test:
+  rspec:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     services:
       mysql:
         image: mysql:5.7
@@ -21,26 +16,30 @@ jobs:
         env:
           MYSQL_DATABASE: root
           MYSQL_ROOT_PASSWORD: password
+        options: --health-cmd "mysqladmin ping" --health-interval 10s --health-timeout 5s --health-retries 10
     env:
-      RAILS_ENV: test
-      DATABASE_URL: "mysql://rails:password@localhost:3306/rails_test"
+      DB_HOST: 127.0.0.1
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-      # Add or replace dependency steps here
       - name: Install Ruby and gems
         uses: ruby/setup-ruby@ee2113536afb7f793eed4ce60e8d3b26db912da4 # v1.127.0
         with:
           bundler-cache: true
-      # Add or replace database setup steps here
-      - name: Set up database schema
-        run: bin/rails db:schema:load
-      # Add or replace test runners here
-      - name: Run tests
-        run: bin/rake
+      - name: Bundler and gem install
+        run: |
+          gem install bundler
+          bundle install --jobs 4 --retry 3 --path vendor/bundle
+      - name: Database create and migrate
+        run: |
+          bundle exec rails db:create RAILS_ENV=test
+          bundle exec rails db:migrate RAILS_ENV=test
+      - name: Run rspec
+        run: bundle exec rspec
 
-  lint:
+  rubocop:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -48,10 +47,5 @@ jobs:
         uses: ruby/setup-ruby@ee2113536afb7f793eed4ce60e8d3b26db912da4 # v1.127.0
         with:
           bundler-cache: true
-      # Add or replace any other lints here
-      - name: Security audit dependencies
-        run: bin/bundler-audit --update
-      - name: Security audit application code
-        run: bin/brakeman -q -w2
-      - name: Lint Ruby files
-        run: bin/rubocop --parallel
+      - name: Run rubocop
+        run: bundle exec rubocop
