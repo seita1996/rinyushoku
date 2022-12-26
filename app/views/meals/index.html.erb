@@ -1,29 +1,39 @@
 <p style="color: green"><%= notice %></p>
 
-<div>
-  <h1>Meals</h1>
+<div class ="flex justify-between mb-8">
+  <div>
+    <h1 class="text-2xl font-sans">離乳食スケジューラ</h1>
+  </div>
+  <div>
+    <button class="shadow-lg bg-sky-500 shadow-sky-500/50 hover:bg-sky-400 text-white rounded px-4 py-2">
+      <%= link_to "カスタム休日へ", custom_holidays_path %>
+    </button>
+    <button class="shadow-lg bg-sky-500 shadow-sky-500/50 hover:bg-sky-400 text-white rounded px-4 py-2">
+      <%= link_to "New", new_meal_path %>
+    </button>
+  </div>
+</div>
 
+<div class="mb-12">
   <%= form_tag import_meals_path, multipart: true do %>
-    <%= file_field_tag :file, class: "block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100" %>
+    <%= file_field_tag :file, class: "block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-sky-50 file:text-sky-700 hover:file:bg-sky-100" %>
     開始日
-    <%= date_field_tag :start_date, class: "rounded px-4 py-2" %>
+    <%= date_field_tag :start_date, class: "block w-full rounded px-4 py-2" %>
     <%= submit_tag "CSVからスケジュールを登録" %>
   <% end %>
 
-  <%= link_to "期間を指定して必要な食材を集計", action: "sum_foods" %>
+  <button class="shadow-lg bg-sky-500 shadow-sky-500/50 hover:bg-sky-400 text-white rounded px-4 py-2">
+    <%= link_to "期間を指定して必要な食材を集計", action: "sum_foods" %>
+  </button>
 </div>
 
-<div id="meals">
+<h2 class="text-xl font-sans">スケジュール</h2>
+
+<div id="meals" class="w-full">
   <% @meals.each do |meal| %>
     <%= render meal %>
     <p>
       <%= link_to "Show this meal", meal %>
     </p>
   <% end %>
-</div>
-
-<div>
-  <button class="shadow-lg bg-sky-500 shadow-sky-500/50 hover:bg-sky-400 text-white rounded px-4 py-2">
-    <%= link_to "New meal", new_meal_path %>
-  </button>
 </div>
