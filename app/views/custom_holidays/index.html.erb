@@ -24,7 +24,7 @@
 
 <div id="custom_holidays">
   <% @custom_holidays.each do |custom_holiday| %>
-    <div class="shadow-lg border rounded px-6 py-4">
+    <div class="shadow-lg border rounded px-6 py-4 mb-2">
       <%= render custom_holiday %>
       <button class="shadow-sm bg-white-500 shadow-sky-500/50 hover:bg-sky-100 text-sky-600 border border-sky-600 rounded px-4 py-2">
         <%= link_to "Show this custom holiday", custom_holiday %>

@@ -3,7 +3,9 @@ class MealsController < ApplicationController
 
   # GET /meals or /meals.json
   def index
-    @meals = Meal.includes(:foods).all
+    set_date_range
+    @meals = Meal.filled_meals(@from, @to)
+    @foods = Meal.sum_foods(@meals)
   end
 
   # GET /meals/1 or /meals/1.json
@@ -63,13 +65,6 @@ class MealsController < ApplicationController
     MealFood.update_debut_flag
     Meal.update_date(params[:start_date])
     redirect_to root_url
-  end
-
-  # GET /meals/sum_foods
-  def sum_foods
-    set_date_range
-    @meals = Meal.filled_meals(@from, @to)
-    @foods = Meal.sum_foods(@meals)
   end
 
   private

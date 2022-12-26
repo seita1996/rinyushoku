@@ -18,12 +18,10 @@
     <%= file_field_tag :file, class: "block text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-sky-50 file:text-sky-700 hover:file:bg-sky-100" %>
     開始日
     <%= date_field_tag :start_date, class: "rounded px-4 py-2" %>
-    <%= submit_tag "CSVからスケジュールを登録" %>
+    <button class="shadow-lg bg-sky-500 shadow-sky-500/50 hover:bg-sky-400 text-white rounded px-4 py-2">
+      <%= submit_tag "CSVからスケジュールを登録" %>
+    </button>
   <% end %>
-
-  <button class="shadow-lg bg-sky-500 shadow-sky-500/50 hover:bg-sky-400 text-white rounded px-4 py-2">
-    <%= link_to "期間を指定して必要な食材を集計", action: "sum_foods" %>
-  </button>
 </div>
 
 <div class ="flex justify-between mb-8">
@@ -38,8 +36,30 @@
 </div>
 
 <div id="meals" class="w-full">
+  <div class="mb-8">
+    <%= form_tag meals_path, method: :get do %>
+      from<%= date_field_tag :from, @from %>
+      to<%= date_field_tag :to, @to %>
+      <button class="shadow-lg bg-sky-500 shadow-sky-500/50 hover:bg-sky-400 text-white rounded px-4 py-2">
+        <%= submit_tag "Search" %>
+      </button>
+    <% end %>
+  </div>
+
+  <div class="shadow-lg border rounded px-6 py-4 mb-2">
+    <div>
+      <h3 class="text-lg font-sans">この期間に必要な食材</h3>
+    </div>
+    <%= @foods.each do |food| %>
+      <div>
+        <li>
+          <%= "#{food[0]}：#{food[1].join(', ')}" %>
+        </li>
+      </div>
+    <% end %>
+  </div>
   <% @meals.each do |meal| %>
-    <div class="shadow-lg border rounded px-6 py-4">
+    <div class="shadow-lg border rounded px-6 py-4 mb-2">
       <%= render meal %>
       <button class="shadow-sm bg-white-500 shadow-sky-500/50 hover:bg-sky-100 text-sky-600 border border-sky-600 rounded px-4 py-2">
         <%= link_to "Show this meal", meal %>
