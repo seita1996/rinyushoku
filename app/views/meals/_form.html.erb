@@ -21,12 +21,12 @@
     <%= form.number_field :ordinal_number %>
   </div>
 
-  <div>
+  <div class="cursor-pointer">
     <%= form.label :date, style: "display: block" %>
     <%= form.date_field :date %>
   </div>
 
-  <div>
+  <button class="bg-indigo-600 hover:bg-indigo-500 text-white rounded px-4 py-2">
     <%= form.submit %>
-  </div>
+  </button>
 <% end %>
