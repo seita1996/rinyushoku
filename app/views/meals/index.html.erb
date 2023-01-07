@@ -50,13 +50,22 @@
     <div>
       <h3 class="text-lg font-sans">この期間に必要な食材</h3>
     </div>
-    <%= @foods.each do |food| %>
-      <div>
-        <li>
-          <%= "#{food[0]}：#{food[1].join(', ')}" %>
-        </li>
-      </div>
-    <% end %>
+    <table class="table-auto border">
+      <thead>
+        <tr>
+          <th class="border px-4 py-2">食材</th>
+          <th class="border px-4 py-2">量</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= @foods.each do |food| %>
+          <tr>
+            <td class="border px-4 py-2"><%= "#{food[0]}" %></td>
+            <td class="border px-4 py-2"><%= "#{food[1].join(', ')}" %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
   </div>
   <% @meals.each do |meal| %>
     <div class="shadow-lg border rounded px-6 py-4 mb-2">
