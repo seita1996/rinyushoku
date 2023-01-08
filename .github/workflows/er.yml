@@ -9,7 +9,6 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     env:
-      RAILS_ENV: development
       DB_NAME: myapp_test
     services:
       db:
@@ -39,8 +38,8 @@ jobs:
       - name: Database create and migrate
         run: |
           cp config/database.ci.yml config/database.yml
-          bundle exec rails db:create
-          bundle exec rails db:migrate
+          bundle exec rails db:create RAILS_ENV=test
+          bundle exec rails db:migrate RAILS_ENV=test
       - name: Make schemaspy.properties
         run: |
           echo -e "
