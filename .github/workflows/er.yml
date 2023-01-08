@@ -7,11 +7,10 @@ on:
 jobs:
   run:
     runs-on: ubuntu-latest
-
+    timeout-minutes: 10
     env:
       RAILS_ENV: development
       DB_NAME: myapp_test
-
     services:
       db:
         image: mysql:5.7
@@ -22,36 +21,42 @@ jobs:
           MYSQL_ROOT_PASSWORD: password
         options: --health-cmd "mysqladmin ping" --health-interval 10s --health-timeout 5s --health-retries 10
     steps:
-      - uses: actions/checkout@v2
-      - uses: ruby/setup-ruby@v1
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Install Ruby and gems
+        uses: ruby/setup-ruby@ee2113536afb7f793eed4ce60e8d3b26db912da4 # v1.127.0
         with:
-          ruby-version: 3.0.0
+          ruby-version: 3.1.3
           bundler-cache: true
-          cache-version: 1
-      - name: mysql set character_set
+      - name: Set mysql character_set
         run: |
           mysql -u root -h 127.0.0.1 -e "set global character_set_server='utf8mb4';"
           mysql -u root -h 127.0.0.1 -e "set global collation_server='utf8mb4_unicode_ci';"
-      - name: db migrate
+      - name: Bundler and gem install
+        run: |
+          gem install bundler
+          bundle install --jobs 4 --retry 3 --path vendor/bundle
+      - name: Database create and migrate
         run: |
           cp config/database.ci.yml config/database.yml
           bundle exec rails db:create
           bundle exec rails db:migrate
-      - name: make schemaspy.properties
-        run: echo -e "
+      - name: Make schemaspy.properties
+        run: |
+          echo -e "
           schemaspy.t=mysql\n
           schemaspy.dp=\n
           schemaspy.host=db\n
           schemaspy.port=3306\n
           schemaspy.db=$DB_NAME\n
           schemaspy.u=root\n
-          schemaspy.p=\n
+          schemaspy.p=password\n
           schemaspy.o=\n
           schemaspy.s=$DB_NAME\n
           " > /tmp/schemaspy.properties
       - name: Prepare a dir for schemaspy output
         run: mkdir -m 777 /tmp/output
-      - name: run schemaspy
+      - name: Run schemaspy
         run: docker run --net=${{ job.container.network }} -v "/tmp/output:/output" -v "/tmp/schemaspy.properties:/schemaspy.properties" schemaspy/schemaspy:latest -rails
-      - name: upload er
+      - name: Upload ER Diagram
         run: echo "/tmp/outputにER図を出力"
