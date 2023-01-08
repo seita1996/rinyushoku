@@ -58,4 +58,8 @@ jobs:
       - name: Run schemaspy
         run: docker run --net=${{ job.container.network }} -v "/tmp/output:/output" -v "/tmp/schemaspy.properties:/schemaspy.properties" schemaspy/schemaspy:latest -rails
       - name: Upload ER Diagram
-        run: echo "/tmp/outputにER図を出力"
+        uses: actions/upload-artifact@v3
+        with:
+          name: ER-Diagram
+          path: /tmp/output
+        # run: echo "/tmp/outputにER図を出力"
