@@ -5,7 +5,7 @@ on:
     # paths:
     #   - "db/migrate/**"
 jobs:
-  run:
+  generate:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     env:
@@ -27,10 +27,6 @@ jobs:
         with:
           ruby-version: 3.1.3
           bundler-cache: true
-      # - name: Set mysql character_set
-      #   run: |
-      #     mysql -u root -h 127.0.0.1 -e "set global character_set_server='utf8mb4';"
-      #     mysql -u root -h 127.0.0.1 -e "set global collation_server='utf8mb4_unicode_ci';"
       - name: Bundler and gem install
         run: |
           gem install bundler
@@ -58,8 +54,19 @@ jobs:
       - name: Run schemaspy
         run: docker run --net=${{ job.container.network }} -v "/tmp/output:/output" -v "/tmp/schemaspy.properties:/schemaspy.properties" schemaspy/schemaspy:latest -rails
       - name: Upload ER Diagram
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-pages-artifact@v1
         with:
-          name: ER-Diagram
           path: /tmp/output
-        # run: echo "/tmp/outputにER図を出力"
+  deploy:
+    needs: generate
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
