@@ -1,8 +1,7 @@
-name: er
+name: "ER Diagram"
 on:
   push:
-    branches:
-      - main
+    branches: [ "main" ]
     paths:
       - "db/migrate/**"
 jobs:
