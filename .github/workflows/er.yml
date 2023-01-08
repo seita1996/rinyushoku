@@ -2,8 +2,8 @@ name: "ER Diagram"
 on:
   push:
     branches: [ "main" ]
-    # paths:
-    #   - "db/migrate/**"
+    paths:
+      - "db/migrate/**"
 jobs:
   generate:
     runs-on: ubuntu-latest
