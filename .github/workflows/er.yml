@@ -1,0 +1,58 @@
+name: er
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "db/migrate/**"
+jobs:
+  run:
+    runs-on: ubuntu-latest
+
+    env:
+      RAILS_ENV: development
+      DB_NAME: myapp_test
+
+    services:
+      db:
+        image: mysql:5.7
+        ports:
+          - 3306:3306
+        env:
+          MYSQL_DATABASE: root
+          MYSQL_ROOT_PASSWORD: password
+        options: --health-cmd "mysqladmin ping" --health-interval 10s --health-timeout 5s --health-retries 10
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.0.0
+          bundler-cache: true
+          cache-version: 1
+      - name: mysql set character_set
+        run: |
+          mysql -u root -h 127.0.0.1 -e "set global character_set_server='utf8mb4';"
+          mysql -u root -h 127.0.0.1 -e "set global collation_server='utf8mb4_unicode_ci';"
+      - name: db migrate
+        run: |
+          cp config/database.ci.yml config/database.yml
+          bundle exec rails db:create
+          bundle exec rails db:migrate
+      - name: make schemaspy.properties
+        run: echo -e "
+          schemaspy.t=mysql\n
+          schemaspy.dp=\n
+          schemaspy.host=db\n
+          schemaspy.port=3306\n
+          schemaspy.db=$DB_NAME\n
+          schemaspy.u=root\n
+          schemaspy.p=\n
+          schemaspy.o=\n
+          schemaspy.s=$DB_NAME\n
+          " > /tmp/schemaspy.properties
+      - name: Prepare a dir for schemaspy output
+        run: mkdir -m 777 /tmp/output
+      - name: run schemaspy
+        run: docker run --net=${{ job.container.network }} -v "/tmp/output:/output" -v "/tmp/schemaspy.properties:/schemaspy.properties" schemaspy/schemaspy:latest -rails
+      - name: upload er
+        run: echo "/tmp/outputにER図を出力"
