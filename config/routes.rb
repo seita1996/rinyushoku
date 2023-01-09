@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   resources :schedules
   resources :custom_holidays
-  root to: 'meals#index'
+  root to: 'schedules#index'
   resources :meals do
     collection do
       post :import

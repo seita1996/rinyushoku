@@ -3,9 +3,7 @@ class MealsController < ApplicationController
 
   # GET /meals or /meals.json
   def index
-    set_date_range
-    @meals = Meal.filled_meals(@from, @to)
-    @foods = Meal.sum_foods(@meals)
+    @meals = Meal.all.includes(:foods)
   end
 
   # GET /meals/1 or /meals/1.json
@@ -76,21 +74,5 @@ class MealsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def meal_params
       params.require(:meal).permit(:day, :ordinal_number, :date)
-    end
-
-    def set_date_range
-      # デフォルト：今日を含めた7日間のスケジュールを表示
-      @from =
-        if params[:from].nil? || params[:from].empty?
-          Date.today
-        else
-          Date.parse(params[:from])
-        end
-      @to =
-        if params[:to].nil? || params[:to].empty?
-          @from + 6
-        else
-          Date.parse(params[:to])
-        end
     end
 end
