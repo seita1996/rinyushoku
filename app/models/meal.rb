@@ -98,6 +98,7 @@ class Meal < ApplicationRecord
     return foods
   end
 
+  # TODO: Delete this logic
   def self.update_date(start_date)
     if start_date.empty?
       start_date = Date.today
