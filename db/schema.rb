@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_09_113701) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_09_115523) do
   create_table "custom_holidays", charset: "utf8mb4", force: :cascade do |t|
     t.date "date"
     t.string "description"
@@ -47,8 +47,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_09_113701) do
     t.date "date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "meal_id"
+    t.index ["meal_id"], name: "index_schedules_on_meal_id"
   end
 
   add_foreign_key "meal_foods", "foods"
   add_foreign_key "meal_foods", "meals"
+  add_foreign_key "schedules", "meals"
 end
