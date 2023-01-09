@@ -1,5 +1,5 @@
 class SchedulesController < ApplicationController
-  before_action :set_schedule, only: %i[ show edit update destroy ]
+  before_action :set_schedule, only: %i[show edit update destroy]
 
   # GET /schedules or /schedules.json
   def index
@@ -7,8 +7,7 @@ class SchedulesController < ApplicationController
   end
 
   # GET /schedules/1 or /schedules/1.json
-  def show
-  end
+  def show; end
 
   # GET /schedules/new
   def new
@@ -16,8 +15,7 @@ class SchedulesController < ApplicationController
   end
 
   # GET /schedules/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /schedules or /schedules.json
   def create
@@ -58,13 +56,14 @@ class SchedulesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_schedule
-      @schedule = Schedule.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def schedule_params
-      params.require(:schedule).permit(:date)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_schedule
+    @schedule = Schedule.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def schedule_params
+    params.require(:schedule).permit(:date)
+  end
 end
