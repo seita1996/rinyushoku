@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :schedules
   resources :custom_holidays
   root to: 'meals#index'
   resources :meals do

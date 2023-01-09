@@ -1,0 +1,12 @@
+<div id="<%= dom_id schedule %>">
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Date:</strong>
+    <%= schedule.date %>
+  </p>
+
+  <% if action_name != "show" %>
+    <%= link_to "Show this schedule", schedule, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+    <%= link_to 'Edit this schedule', edit_schedule_path(schedule), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
+    <hr class="mt-6">
+  <% end %>
+</div>
