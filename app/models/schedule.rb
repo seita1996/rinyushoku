@@ -46,6 +46,6 @@ class Schedule < ApplicationRecord
         foods[mf.food.name] << mf.amount # 同じ食材を配列へ
       end
     end
-    return foods
+    foods
   end
 end
