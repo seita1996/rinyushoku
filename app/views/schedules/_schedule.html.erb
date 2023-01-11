@@ -1,7 +1,27 @@
 <div id="<%= dom_id schedule %>">
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Date:</strong>
+  <p>
+    <strong>Day:</strong>
+    <%= schedule.meal.day %>
+  </p>
+
+  <p>
+    <strong>回食:</strong>
+    <%= schedule.meal.ordinal_number %>
+  </p>
+
+  <p>
+    <strong>Date:</strong>
     <%= schedule.date %>
+  </p>
+
+  <p>
+    <strong>食材:</strong>
+    <%= schedule.meal.meal_foods.map { |mf| "#{mf.food.name}#{mf.amount}" }.join(' ') %>
+  </p>
+
+  <p>
+    <strong>初めて食べる食材がある:</strong>
+    <%= schedule.meal.has_debut_food %>
   </p>
 
   <% if action_name != "show" %>

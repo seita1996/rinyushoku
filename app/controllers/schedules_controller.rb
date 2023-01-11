@@ -4,9 +4,8 @@ class SchedulesController < ApplicationController
   # GET /schedules or /schedules.json
   def index
     set_date_range
-    @schedules = Schedule.all
-    @meals = Meal.filled_meals(@from, @to)
-    @foods = Meal.sum_foods(@meals)
+    @schedules = Schedule.includes(meal: :foods).where(date: [@from..@to])
+    @foods = Schedule.sum_foods(@schedules)
   end
 
   # GET /schedules/1 or /schedules/1.json

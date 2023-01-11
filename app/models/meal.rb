@@ -55,49 +55,6 @@ class Meal < ApplicationRecord
     MealFood.insert_all(meal_foods)
   end
 
-  # TODO: Modelの外へ
-  # TODO: 発行するクエリを最小限に
-  # スキップされた日の食事を前日の繰り返しにする
-  def self.filled_meals(date_from, date_to)
-    meals = Meal.includes(:foods).where(date: [date_from..date_to])
-    target_dates = (Date.parse(date_from.to_s)..Date.parse(date_to.to_s)).to_a.map { |date| date.to_s }
-    scheduled_dates = meals.map { |meal| meal.date.to_s }.uniq
-    missing_pieces = target_dates - scheduled_dates
-    result = []
-    target_dates.each do |date|
-      if missing_pieces.exclude?(date)
-        # スキップされていない日：そのままresultへ挿入
-        meals.where(date: date).each do |record|
-          result << record
-        end
-      else
-        # スキップされている日：日付を遡り、直近のスケジュールの日付を変更したものをresultへ挿入
-        date_minus = 1
-        before_date_meals = Meal.includes(:foods).where(date: (Date.parse(date) - date_minus))
-        while before_date_meals.empty?
-          date_minus += 1
-          before_date_meals = Meal.includes(:foods).where(date: (Date.parse(date) - date_minus))
-        end
-        before_date_meals.each do |record|
-          record.date = date
-          result << record
-        end
-      end
-    end
-    result
-  end
-
-  def self.sum_foods(meals)
-    foods = {}
-    meals.each do |meal|
-      meal.meal_foods.each do |mf|
-        foods[mf.food.name] = [] unless foods.key?(mf.food.name) # 食材がキーに存在しなければ空の配列を作成
-        foods[mf.food.name] << mf.amount # 同じ食材を配列へ
-      end
-    end
-    return foods
-  end
-
   # TODO: Delete this logic
   def self.update_date(start_date)
     if start_date.empty?
