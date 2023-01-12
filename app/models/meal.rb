@@ -55,29 +55,6 @@ class Meal < ApplicationRecord
     MealFood.insert_all(meal_foods)
   end
 
-  # TODO: Delete this logic
-  def self.update_date(start_date)
-    if start_date.empty?
-      start_date = Date.today
-    else
-      start_date = Date.parse(start_date)
-    end
-    current_date = start_date - 1 # ループに入ってすぐ+1するため-1しておく
-    Meal.all.each do |meal|
-      # 2回食以降は同日
-      current_date += 1 if meal.ordinal_number == 1
-
-      # 初めて食べる食材があり、当日が日曜または祝日またはカスタム休日ならば日付をインクリメント（休日以外の日になるまで繰り返す）
-      while meal.has_debut_food && (current_date.wday == 0 || HolidayJp.holiday?(current_date) || CustomHoliday.include?(current_date)) do
-        current_date += 1
-      end
-      meal.date = current_date
-
-      # TODO: bulk update
-      meal.save
-    end
-  end
-
   def has_debut_food
     self.meal_foods.inject(false) { |result, mf| result || mf.debut }
   end
