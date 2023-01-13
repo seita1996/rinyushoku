@@ -5,6 +5,7 @@ class Meal < ApplicationRecord
 
   def self.import(file)
     # テーブルのデータを全削除
+    Schedule.destroy_all
     MealFood.destroy_all
     Food.destroy_all
     Meal.destroy_all

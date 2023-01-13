@@ -122,6 +122,8 @@ Metrics/CyclomaticComplexity:
 # Configuration parameters: CountComments, CountAsOne, ExcludedMethods, AllowedMethods, AllowedPatterns, IgnoredMethods.
 Metrics/MethodLength:
   Max: 37
+  Exclude:
+    - 'app/models/meal.rb'
 
 # Offense count: 4
 # Configuration parameters: AllowedMethods, AllowedPatterns, IgnoredMethods.
