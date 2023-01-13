@@ -11,6 +11,15 @@ Rails.application.routes.draw do
       post :import
     end
   end
+  namespace 'api' do
+    namespace 'v1' do
+      resources :schedules do
+        collection do
+          get :index
+        end
+      end
+    end
+  end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
