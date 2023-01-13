@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_09_115523) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_13_061308) do
   create_table "custom_holidays", charset: "utf8mb4", force: :cascade do |t|
     t.date "date"
     t.string "description"
@@ -38,7 +38,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_09_115523) do
   create_table "meals", charset: "utf8mb4", force: :cascade do |t|
     t.integer "day"
     t.integer "ordinal_number"
-    t.date "date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

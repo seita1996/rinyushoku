@@ -10,11 +10,6 @@
   </p>
 
   <p>
-    <strong>Date:</strong>
-    <%= meal.date %>
-  </p>
-
-  <p>
     <strong>食材:</strong>
     <%= meal.meal_foods.map { |mf| "#{mf.food.name}#{mf.amount}" }.join(' ') %>
   </p>
