@@ -50,6 +50,7 @@ gem "bootsnap", require: false
 
 gem "dotenv-rails"
 gem "holiday_jp"
+gem "rack-cors"
 gem "sd_notify"
 gem "tailwindcss-rails"
 
