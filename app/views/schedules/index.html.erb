@@ -66,7 +66,7 @@
           </tr>
         </thead>
         <tbody>
-          <%= @foods.each do |food| %>
+          <% @foods.each do |food| %>
             <tr>
               <td class="border px-4 py-2"><%= "#{food[0]}" %></td>
               <td class="border px-4 py-2"><%= "#{food[1].join(', ')}" %></td>
