@@ -1,32 +1,14 @@
 <div id="<%= dom_id schedule %>">
   <p>
-    <strong>Day:</strong>
-    <%= schedule.meal.day %>
+    <%= view_date(schedule.date) %>
   </p>
 
   <p>
-    <strong>回食:</strong>
-    <%= schedule.meal.ordinal_number %>
-  </p>
-
-  <p>
-    <strong>Date:</strong>
-    <%= schedule.date %>
-  </p>
-
-  <p>
-    <strong>食材:</strong>
-    <%= schedule.meal.meal_foods.map { |mf| "#{mf.food.name}#{mf.amount}" }.join(' ') %>
+    <%= "#{schedule.meal.ordinal_number}回食(#{schedule.meal.meal_foods.map { |mf| "#{mf.food.name}#{mf.amount}" }.join(' ')})" %>
   </p>
 
   <p>
     <strong>初めて食べる食材がある:</strong>
     <%= schedule.meal.has_debut_food %>
   </p>
-
-  <% if action_name != "show" %>
-    <%= link_to "Show this schedule", schedule, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-    <%= link_to 'Edit this schedule', edit_schedule_path(schedule), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
-    <hr class="mt-6">
-  <% end %>
 </div>
