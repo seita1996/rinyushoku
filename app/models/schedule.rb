@@ -14,7 +14,7 @@ class Schedule < ApplicationRecord
       # 2回食以降は同日
       current_date += 1 if meal.ordinal_number == 1
       current_date = save_repeat_schedule(meal, current_date)
-      schedule = Schedule.new(date: current_date, meal_id: meal.id)
+      schedule = Schedule.new(date: current_date, has_debut_food: meal.has_debut_food, meal_id: meal.id)
 
       # TODO: bulk update
       schedule.save

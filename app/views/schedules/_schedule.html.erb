@@ -1,14 +1,15 @@
-<div id="<%= dom_id schedule %>">
+<div id="<%= dom_id schedule %>" class="<%= card_classes(schedule) %>">
   <p>
     <%= view_date(schedule.date) %>
   </p>
 
   <p>
-    <%= "#{schedule.meal.ordinal_number}回食(#{schedule.meal.meal_foods.map { |mf| "#{mf.food.name}#{mf.amount}" }.join(' ')})" %>
+    <strong><%= "#{schedule.meal.ordinal_number}回食(#{schedule.meal.meal_foods.map { |mf| "#{mf.food.name}#{mf.amount}" }.join(' ')})" %></strong>
   </p>
 
-  <p>
-    <strong>初めて食べる食材がある:</strong>
-    <%= schedule.meal.has_debut_food %>
-  </p>
+  <% if schedule.has_debut_food %>
+    <p>
+      初めて食べる食材があります
+    </p>
+  <% end %>
 </div>

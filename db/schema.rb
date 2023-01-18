@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_13_061308) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_18_094709) do
   create_table "custom_holidays", charset: "utf8mb4", force: :cascade do |t|
     t.date "date"
     t.string "description"
@@ -47,6 +47,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_13_061308) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "meal_id"
+    t.boolean "has_debut_food", default: false
     t.index ["meal_id"], name: "index_schedules_on_meal_id"
   end
 
