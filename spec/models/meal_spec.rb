@@ -89,5 +89,35 @@ RSpec.describe 'Model Meal', type: :model do
         expect(meals_name_amount(meal)).to eq('米粥5匙、南瓜2匙、ブロッコリー1匙')
       end
     end
+    context 'Excelファイルをインポートすると' do
+      let(:file_path) { file_fixture('rinyushoku_failure.xlsx') }
+      it 'データの登録に失敗する' do
+        expect { Meal.import(file_path) }.to raise_error(StandardError, 'Only CSV file is allowed to be specified in file_path')
+      end
+    end
+    context '空のCSVファイルをインポートすると' do
+      let(:file_path) { file_fixture('rinyushoku_failure_empty.csv') }
+      it 'データの登録に失敗する' do
+        expect { Meal.import(file_path) }.to raise_error(StandardError, 'Empty CSV cannot be imported')
+      end
+    end
+    context '1列目(day)の値が数値ではないCSVファイルをインポートすると' do
+      let(:file_path) { file_fixture('rinyushoku_failure_day_type.csv') }
+      it 'データの登録に失敗する' do
+        expect { Meal.import(file_path) }.to raise_error(StandardError, 'The type of day is invalid')
+      end
+    end
+    context '1行目の食材名が一部空であるCSVファイルをインポートすると' do
+      let(:file_path) { file_fixture('rinyushoku_failure_insufficient_food.csv') }
+      it 'データの登録に失敗する' do
+        expect { Meal.import(file_path) }.to raise_error(StandardError, 'There is missing data in the header')
+      end
+    end
+    context '食材の量が記入されていない行のあるCSVファイルをインポートすると' do
+      let(:file_path) { file_fixture('rinyushoku_failure_insufficient_amount.csv') }
+      it 'データの登録に失敗する' do
+        expect { Meal.import(file_path) }.to raise_error(StandardError, 'There are lines where the amount of foods is not filled in')
+      end
+    end
   end
 end

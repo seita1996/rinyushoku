@@ -7,6 +7,9 @@ class Meal < ApplicationRecord
   validates :ordinal_number, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 1 }
 
   def self.import(file_path)
+    check_file_format(file_path)
+    check_file_data(file_path)
+
     # テーブルのデータを全削除
     Schedule.destroy_all
     MealFood.destroy_all
@@ -57,6 +60,23 @@ class Meal < ApplicationRecord
       before_row_day = row['day'].to_i
     end
     MealFood.insert_all(meal_foods)
+  end
+
+  def self.check_file_format(file_path)
+    raise StandardError, 'Only CSV file is allowed to be specified in file_path' if File.extname(file_path) != '.csv'
+    raise StandardError, 'Empty CSV cannot be imported' if CSV.read(file_path)[0].nil?
+    raise StandardError, 'The type of day is invalid' unless CSV.read(file_path).transpose[0].drop(1).filter { |cell| !number?(cell) }.empty?
+  end
+
+  def self.check_file_data(file_path)
+    raise StandardError, 'There is missing data in the header' unless CSV.read(file_path)[0].filter { |cell| cell.nil? }.empty?
+    raise StandardError, 'There are lines where the amount of foods is not filled in' if CSV.read(file_path).drop(1).any? { |row| row.drop(1).all? { |cell| cell.nil? } }
+  end
+
+  def self.number?(str)
+    # 文字列が数字だけで構成されていれば true を返す
+    # 文字列の先頭(\A)から末尾(\z)までが「0」から「9」の文字か
+    (str =~ /\A[0-9]+\z/) != nil
   end
 
   def has_debut_food
