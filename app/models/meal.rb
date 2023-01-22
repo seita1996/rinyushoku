@@ -6,7 +6,7 @@ class Meal < ApplicationRecord
   validates :day, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 1 }
   validates :ordinal_number, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 1 }
 
-  def self.import(file)
+  def self.import(file_path)
     # テーブルのデータを全削除
     Schedule.destroy_all
     MealFood.destroy_all
@@ -14,7 +14,7 @@ class Meal < ApplicationRecord
     Meal.destroy_all
 
     # CSVヘッダのday以外のセルをfoodsテーブルへインポート
-    food_name_arr = CSV.read(file.path)[0].drop(1)
+    food_name_arr = CSV.read(file_path)[0].drop(1)
     # foods = food_name_arr.map { |food| JSON.parse("{\"name\": \"#{food}\"}") }
     foods = food_name_arr.map { |food| {name: food} }
     Food.insert_all(foods)
@@ -23,7 +23,7 @@ class Meal < ApplicationRecord
     meals = []
     before_row_day = -1
     ordinal_number = 1
-    CSV.foreach(file.path, headers: true) do |row|
+    CSV.foreach(file_path, headers: true) do |row|
       if before_row_day == row['day'].to_i
         # dayの値が前の行と同じである場合（2回食、3回食がある日）
         ordinal_number += 1
@@ -41,7 +41,7 @@ class Meal < ApplicationRecord
     meal_foods = []
     before_row_day = -1
     ordinal_number = 1
-    CSV.foreach(file.path, headers: true) do |row|
+    CSV.foreach(file_path, headers: true) do |row|
       if before_row_day == row['day'].to_i
         # dayの値が前の行と同じである場合（2回食、3回食がある日）
         ordinal_number += 1
