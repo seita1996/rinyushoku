@@ -127,6 +127,10 @@ GEM
     importmap-rails (1.1.5)
       actionpack (>= 6.0.0)
       railties (>= 6.0.0)
+    interactor (3.1.2)
+    interactor-rails (2.2.1)
+      interactor (~> 3.0)
+      rails (>= 4.2)
     io-console (0.6.0)
     irb (1.6.2)
       reline (>= 0.3.0)
@@ -310,6 +314,8 @@ DEPENDENCIES
   faker
   holiday_jp
   importmap-rails
+  interactor (~> 3.0)
+  interactor-rails (~> 2.0)
   jbuilder
   mysql2 (~> 0.5)
   puma (~> 6.0)

@@ -50,6 +50,8 @@ gem "bootsnap", require: false
 
 gem "dotenv-rails"
 gem "holiday_jp"
+gem "interactor", "~> 3.0"
+gem "interactor-rails", "~> 2.0"
 gem "rack-cors"
 gem "sd_notify"
 gem "tailwindcss-rails"
