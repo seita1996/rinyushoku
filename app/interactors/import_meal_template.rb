@@ -65,12 +65,21 @@ class ImportMealTemplate
     end
 
     def parse_meal_foods
+      debuted_food_ids = []
+      is_debut = lambda do |food_id|
+        if debuted_food_ids.exclude?(food_id)
+          debuted_food_ids << food_id
+          return true
+        end
+        return false
+      end
+
       result = []
       CSV.foreach(file_path, headers: true).with_index(1) do |row, idx|
         eaten_foods_at_this_meal = row.filter { |key, value| key != 'day' && !value.nil? }.map { |food| { name: food[0], amount: food[1] } }
         eaten_foods_at_this_meal.each do |food|
           food_id = foods.filter { |f| f.name == food[:name] }.first.id
-          result << CsvMealFood.new(food_id:, meal_id: idx, amount: food[:amount], debut: false)
+          result << CsvMealFood.new(food_id:, meal_id: idx, amount: food[:amount], debut: is_debut.call(food_id))
         end
       end
       result

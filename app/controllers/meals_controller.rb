@@ -60,7 +60,6 @@ class MealsController < ApplicationController
   # POST /meals/import
   def import
     ImportMealTemplate.call(file_path: params[:file].path)
-    MealFood.update_debut_flag
     Schedule.recalculate('1', params[:start_date])
     redirect_to root_url
   end
