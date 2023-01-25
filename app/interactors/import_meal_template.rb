@@ -13,6 +13,70 @@ class ImportMealTemplate
   # def rollback
   # end
 
+  class CsvParser
+    attr_reader :file_path
+    attr_accessor :foods, :meals, :meal_foods
+
+    CsvFood = Struct.new(:id, :name, keyword_init: true)
+    CsvMeal = Struct.new(:id, :day, :ordinal_number, keyword_init: true)
+    CsvMealFood = Struct.new(:food_id, :meal_id, :amount, :debut, keyword_init: true)
+
+    def initialize(file_path)
+      @file_path = file_path
+      @foods = parse_foods
+      @meals = parse_meals
+      @meal_foods = parse_meal_foods
+    end
+
+    def foods_h
+      foods.map(&:to_h)
+    end
+
+    def meals_h
+      meals.map(&:to_h)
+    end
+
+    def meal_foods_h
+      meal_foods.map(&:to_h)
+    end
+
+    private
+
+    def ordinal_number(last_record, row_day)
+      # 最初の行 または dayの値が前の行と異なる場合（1回食だけの日）
+      return 1 if last_record.nil? || last_record.day != row_day
+
+      # dayの値が前の行と同じである場合（2回食、3回食がある日）
+      last_record.ordinal_number + 1
+    end
+
+    def parse_foods
+      food_names = CSV.read(file_path)[0].drop(1)
+      food_names.map.with_index(1) { |name, idx| CsvFood.new(id: idx, name:) }
+    end
+
+    def parse_meals
+      result = []
+      CSV.foreach(file_path, headers: true).with_index(1) do |row, idx|
+        day = row['day'].to_i
+        result << CsvMeal.new(id: idx, day:, ordinal_number: ordinal_number(result.last, day))
+      end
+      result
+    end
+
+    def parse_meal_foods
+      result = []
+      CSV.foreach(file_path, headers: true).with_index(1) do |row, idx|
+        eaten_foods_at_this_meal = row.filter { |key, value| key != 'day' && !value.nil? }.map { |food| { name: food[0], amount: food[1] } }
+        eaten_foods_at_this_meal.each do |food|
+          food_id = foods.filter { |f| f.name == food[:name] }.first.id
+          result << CsvMealFood.new(food_id:, meal_id: idx, amount: food[:amount], debut: false)
+        end
+      end
+      result
+    end
+  end
+
   private
 
   def check_file_format(file_path)
@@ -34,48 +98,18 @@ class ImportMealTemplate
   end
 
   def import(file_path)
+    csv_parser = CsvParser.new(file_path)
+
     # CSVヘッダのday以外のセルをfoodsテーブルへインポート
-    insert_foods(file_path)
-
-    # CSVのbodyをmeal_foodsテーブルへインポート
-    insert_meals(file_path)
-
-    # CSVのbodyをmeal_foodsテーブルへインポート
-    insert_meal_foods(file_path)
-  end
-
-  def insert_foods(file_path)
-    food_name_arr = CSV.read(file_path)[0].drop(1)
-    foods = food_name_arr.map { |food| { name: food } }
+    foods = csv_parser.foods_h
     Food.insert_all(foods)
-  end
 
-  def insert_meals(file_path)
-    meals = []
-    before_row_day = -1
-    ordinal_number = 1
-    CSV.foreach(file_path, headers: true) do |row|
-      ordinal_number = ordinal_number(ordinal_number, before_row_day, row['day'].to_i)
-      meal = { day: row['day'], ordinal_number: }
-      meals << meal
-      before_row_day = row['day'].to_i
-    end
+    # CSVのbodyをmeal_foodsテーブルへインポート
+    meals = csv_parser.meals_h
     Meal.insert_all(meals)
-  end
 
-  def insert_meal_foods(file_path)
-    meal_foods = []
-    before_row_day = -1
-    ordinal_number = 1
-    CSV.foreach(file_path, headers: true) do |row|
-      ordinal_number = ordinal_number(ordinal_number, before_row_day, row['day'].to_i)
-      eaten_foods_at_this_meal = row.select { |key, value| key != 'day' && !value.nil? }
-      eaten_foods_at_this_meal.each do |food|
-        meal_food = { food_id: Food.find_by(name: food[0]).id, meal_id: Meal.where(day: row['day'].to_i)[ordinal_number - 1].id, amount: food[1], debut: false }
-        meal_foods << meal_food
-      end
-      before_row_day = row['day'].to_i
-    end
+    # CSVのbodyをmeal_foodsテーブルへインポート
+    meal_foods = csv_parser.meal_foods_h
     MealFood.insert_all(meal_foods)
   end
 
@@ -83,16 +117,5 @@ class ImportMealTemplate
     # 文字列が数字だけで構成されていれば true を返す
     # 文字列の先頭(\A)から末尾(\z)までが「0」から「9」の文字か
     (str =~ /\A[0-9]+\z/) != nil
-  end
-
-  def ordinal_number(ordinal_number, before_row_day, row_day)
-    if before_row_day == row_day
-      # dayの値が前の行と同じである場合（2回食、3回食がある日）
-      ordinal_number += 1
-    else
-      # dayの値が前の行と異なる場合（1回食だけの日）
-      ordinal_number = 1
-    end
-    ordinal_number
   end
 end
