@@ -60,7 +60,7 @@ class MealsController < ApplicationController
   # POST /meals/import
   def import
     ImportMealTemplate.call(file_path: params[:file].path)
-    Schedule.recalculate('1', params[:start_date])
+    Schedules::Recalculate.call('1', params[:start_date])
     redirect_to root_url
   end
 
