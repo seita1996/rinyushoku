@@ -60,7 +60,7 @@ class SchedulesController < ApplicationController
   # POST /schedules/recalculate
   def recalculate
     respond_to do |format|
-      if Schedules::Recalculate.call(params[:day], params[:start_date])
+      if RecalculateSchedule.call(day: params[:day], start_date: params[:start_date])
         format.html { redirect_to schedules_url, notice: "スケジュールの再計算が完了しました" }
       else
         format.html { redirect_to schedules_url, alert: "スケジュールの再計算が失敗しました" }
