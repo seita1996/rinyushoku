@@ -12,8 +12,12 @@
   </head>
 
   <body>
-    <main class="container mx-auto mt-8 px-5">
-      <%= yield %>
+    <main class="container mx-auto mt-12">
+      <%= render  'layouts/navbar' %>
+      <%= render  'layouts/sidebar' %>
+      <div class="p-4 sm:ml-64">
+        <%= yield %>
+      </div>
     </main>
   </body>
 </html>
