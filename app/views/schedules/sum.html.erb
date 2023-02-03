@@ -1,0 +1,28 @@
+<%= turbo_frame_tag "modal" do %>
+  <%= tag.div data: { controller: "turbo-modal" }, class: "shadow-lg border rounded px-6 py-4 mb-2" do %>
+    <div class ="flex justify-between mb-8">
+      <div>
+        <h3 class="text-lg font-sans"><%= "#{view_date(params[:from])}～#{view_date(params[:to])}"%>に必要な食材</h3>
+      </div>
+      <%= button_tag data: { action: "turbo-modal#hideModal" }, type: "button" do %>
+        <svg aria-hidden="true" class="w-6 h-6 text-gray-500 transition duration-75" fill="currentColor" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
+      <% end %>
+    </div>
+    <table class="table-auto border">
+      <thead>
+        <tr>
+          <th class="border px-4 py-2">食材</th>
+          <th class="border px-4 py-2">量</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @foods.each do |food| %>
+          <tr>
+            <td class="border px-4 py-2"><%= "#{food[0]}" %></td>
+            <td class="border px-4 py-2"><%= "#{food[1].join(', ')}" %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+<% end %>

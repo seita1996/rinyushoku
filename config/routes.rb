@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   resources :schedules do
     collection do
       post :recalculate
+      get :sum
     end
   end
   resources :custom_holidays

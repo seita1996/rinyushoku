@@ -5,7 +5,6 @@ class SchedulesController < ApplicationController
   def index
     set_date_range
     @schedules = Schedule.includes(meal: :foods).where(date: [@from..@to])
-    @foods = Schedule.sum_foods(@schedules)
   end
 
   # GET /schedules/1 or /schedules/1.json
@@ -67,6 +66,12 @@ class SchedulesController < ApplicationController
       end
       format.json { head :no_content }
     end
+  end
+
+  def sum
+    set_date_range
+    @schedules = Schedule.includes(meal: :foods).where(date: [@from..@to])
+    @foods = Schedule.sum_foods(@schedules)
   end
 
   private
