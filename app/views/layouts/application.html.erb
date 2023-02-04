@@ -12,9 +12,9 @@
   </head>
 
   <body>
+    <%= render  'layouts/navbar' %>
+    <%= render  'layouts/sidebar' %>
     <main class="container mx-auto mt-14">
-      <%= render  'layouts/navbar' %>
-      <%= render  'layouts/sidebar' %>
       <div class="p-4 sm:ml-64">
         <%= yield %>
       </div>
