@@ -6,18 +6,21 @@
   </div>
   <div>
     <button class="shadow-lg bg-sky-500 shadow-sky-500/50 hover:bg-sky-400 text-white rounded px-4 py-2">
-      <%= link_to "New", new_custom_holiday_path %>
+      <%= link_to "追加", new_custom_holiday_path %>
     </button>
   </div>
 </div>
 
 <div id="custom_holidays">
   <% @custom_holidays.each do |custom_holiday| %>
-    <div class="shadow-lg border rounded px-6 py-4 mb-2">
+    <div class="flex justify-between shadow-lg border rounded px-6 py-4 mb-2">
       <%= render custom_holiday %>
-      <button class="shadow-sm bg-white-500 shadow-sky-500/50 hover:bg-sky-100 text-sky-600 border border-sky-600 rounded px-4 py-2">
-        <%= link_to "Show this custom holiday", custom_holiday %>
-      </button>
+      <div class="md:flex justify-center gap-4">
+        <button class="shadow-lg bg-teal-500 shadow-teal-500/50 hover:bg-teal-400 text-white rounded px-4 py-2 h-10">
+          <%= link_to "編集", edit_custom_holiday_path(custom_holiday) %>
+        </button>
+        <%= button_to "削除", custom_holiday, method: :delete, class: "shadow-lg bg-rose-500 shadow-rose-500/50 hover:bg-rose-400 text-white rounded px-4 py-2 h-10" %>
+      </div>
     </div>
   <% end %>
 </div>

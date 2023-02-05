@@ -3,7 +3,7 @@ class CustomHolidaysController < ApplicationController
 
   # GET /custom_holidays or /custom_holidays.json
   def index
-    @custom_holidays = CustomHoliday.all
+    @custom_holidays = CustomHoliday.all.order(:date)
   end
 
   # GET /custom_holidays/1 or /custom_holidays/1.json

@@ -5,7 +5,7 @@
     <h2 class="text-xl font-sans">テンプレート</h2>
   </div>
   <div>
-    <button data-modal-target="defaultModal" data-modal-toggle="defaultModal" class="shadow-lg bg-red-500 shadow-red-500/50 hover:bg-red-400 text-white rounded px-4 py-2" type="button">
+    <button data-modal-target="defaultModal" data-modal-toggle="defaultModal" class="shadow-lg bg-rose-500 shadow-rose-500/50 hover:bg-rose-400 text-white rounded px-4 py-2" type="button">
       インポート
     </button>
   </div>
@@ -46,7 +46,7 @@
             <span>開始日</span>
             <%= date_field_tag :start_date, Date.today, class: "shadow appearance-none border rounded py-2 px-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
           </div>
-          <button class="shadow-lg bg-red-500 shadow-red-500/50 hover:bg-red-400 text-white rounded px-4 py-2">
+          <button class="shadow-lg bg-rose-500 shadow-rose-500/50 hover:bg-rose-400 text-white rounded px-4 py-2">
             <%= submit_tag "実行", class: "cursor-pointer" %>
           </button>
         </div>
@@ -59,9 +59,6 @@
   <% @meals.each do |meal| %>
     <div class="shadow-lg border rounded px-6 py-4 mb-2">
       <%= render meal %>
-      <button class="shadow-sm bg-white-500 shadow-sky-500/50 hover:bg-sky-100 text-sky-600 border border-sky-600 rounded px-4 py-2">
-        <%= link_to "Show this meal", meal %>
-      </button>
     </div>
   <% end %>
 </div>

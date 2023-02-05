@@ -13,15 +13,17 @@
 
   <div>
     <%= form.label :date, style: "display: block" %>
-    <%= form.date_field :date %>
+    <%= form.date_field :date, class: "shadow appearance-none border rounded py-2 px-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
   </div>
 
   <div>
     <%= form.label :description, style: "display: block" %>
-    <%= form.text_field :description %>
+    <%= form.text_field :description, class: "shadow appearance-none border rounded py-2 px-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
   </div>
 
   <div>
-    <%= form.submit %>
+    <button class="shadow-lg bg-sky-500 shadow-sky-500/50 hover:bg-sky-400 text-white rounded px-4 py-2">
+      <%= form.submit %>
+    </button>
   </div>
 <% end %>

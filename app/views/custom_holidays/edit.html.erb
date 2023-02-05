@@ -1,10 +1,15 @@
-<h1>Editing custom holiday</h1>
+<div class ="flex justify-between mb-8">
+  <div>
+    <h2 class="text-xl font-sans">カスタム休日　編集</h2>
+  </div>
+</div>
 
 <%= render "form", custom_holiday: @custom_holiday %>
 
 <br>
 
 <div>
-  <%= link_to "Show this custom holiday", @custom_holiday %> |
-  <%= link_to "Back to custom holidays", custom_holidays_path %>
+  <button class="shadow-lg bg-slate-500 shadow-slate-500/50 hover:bg-slate-400 text-white rounded px-4 py-2">
+    <%= link_to "戻る", custom_holidays_path %>
+  </button>
 </div>

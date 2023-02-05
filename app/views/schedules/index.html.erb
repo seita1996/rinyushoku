@@ -1,15 +1,15 @@
 <div class="w-full">
   <% if notice.present? %>
-    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
+    <p class="py-2 px-3 bg-teal-50 mb-5 text-teal-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
   <% elsif alert.present? %>
-    <p class="py-2 px-3 bg-red-50 mb-5 text-red-500 font-medium rounded-lg inline-block" id="alert"><%= alert %></p>
+    <p class="py-2 px-3 bg-rose-50 mb-5 text-rose-500 font-medium rounded-lg inline-block" id="alert"><%= alert %></p>
   <% end %>
 
   <div class ="flex justify-between mb-8">
     <div>
       <h2 class="text-xl font-sans">スケジュール</h2>
     </div>
-    <button data-modal-target="defaultModal" data-modal-toggle="defaultModal" class="shadow-lg bg-red-500 shadow-red-500/50 hover:bg-red-400 text-white rounded px-4 py-2" type="button">
+    <button data-modal-target="defaultModal" data-modal-toggle="defaultModal" class="shadow-lg bg-rose-500 shadow-rose-500/50 hover:bg-rose-400 text-white rounded px-4 py-2" type="button">
       再計算
     </button>
   </div>
@@ -54,7 +54,7 @@
             <%= date_field_tag :start_date, Date.today, class: "shadow appearance-none border rounded py-2 px-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
             <span>に合わせてスケジュールを再計算</span>
           </div>
-          <button class="shadow-lg bg-red-500 shadow-red-500/50 hover:bg-red-400 text-white rounded px-4 py-2">
+          <button class="shadow-lg bg-rose-500 shadow-rose-500/50 hover:bg-rose-400 text-white rounded px-4 py-2">
             <%= submit_tag "実行", class: "cursor-pointer" %>
           </button>
         </div>
