@@ -52,7 +52,7 @@ RSpec.describe 'Model Meal', type: :model do
       end
     end
   end
-  describe 'method has_debut_food' do
+  describe 'method debut_food?' do
     let(:file_path) { file_fixture('rinyushoku_success.csv') }
     before do
       # 事前にテンプレートデータをインポートしておく
@@ -64,13 +64,13 @@ RSpec.describe 'Model Meal', type: :model do
     context '該当する食事に「初めて食べる食材」が1つでも含まれている場合' do
       it 'trueを返す' do
         day2_1st_meal = Meal.find_by(day: 2, ordinal_number: 1)
-        expect(day2_1st_meal.has_debut_food).to eq true
+        expect(day2_1st_meal.debut_food?).to eq true
       end
     end
     context '該当する食事に「初めて食べる食材」が含まれない場合' do
       it 'falseを返す' do
         day3_2nd_meal = Meal.find_by(day: 3, ordinal_number: 2)
-        expect(day3_2nd_meal.has_debut_food).to eq false
+        expect(day3_2nd_meal.debut_food?).to eq false
       end
     end
   end

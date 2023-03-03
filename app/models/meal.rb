@@ -6,7 +6,7 @@ class Meal < ApplicationRecord
   validates :day, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 1 }
   validates :ordinal_number, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 1 }
 
-  def has_debut_food
+  def debut_food?
     meal_foods.inject(false) { |result, mf| result || mf.debut }
   end
 end

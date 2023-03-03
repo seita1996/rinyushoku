@@ -8,7 +8,7 @@
     <strong><%= "#{meal.ordinal_number}回食(#{meal.meal_foods.map { |mf| "#{mf.food.name}#{mf.amount}" }.join(' ')})" %></strong>
   </p>
 
-  <% if meal.has_debut_food %>
+  <% if meal.debut_food? %>
     <p>
       初めて食べる食材があります
     </p>

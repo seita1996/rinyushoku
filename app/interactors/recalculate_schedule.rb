@@ -25,13 +25,13 @@ class RecalculateSchedule
 
       # 初めて食べる食材があり、当日が日曜または祝日またはカスタム休日ならば
       # 前日のScheduleを複製したあと日付をインクリメント（休日以外の日になるまで繰り返す）
-      while meal.has_debut_food && holiday?(current_date)
+      while meal.debut_food? && holiday?(current_date)
         dup_yesterday_schedules(current_date, schedules).each do |dup_schedule|
           schedules << dup_schedule
         end
         current_date += 1
       end
-      schedules << ScheduleRecord.new(date: current_date, has_debut_food: meal.has_debut_food, meal_id: meal.id)
+      schedules << ScheduleRecord.new(date: current_date, has_debut_food: meal.debut_food?, meal_id: meal.id)
     end
     schedules.map(&:to_h)
   end
