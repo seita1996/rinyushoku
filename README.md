@@ -1,5 +1,10 @@
 # 離乳食スケジューラ
 
+[![Brakeman Scan](https://github.com/seita1996/rinyushoku/actions/workflows/brakeman.yml/badge.svg)](https://github.com/seita1996/rinyushoku/actions/workflows/brakeman.yml)
+[![CodeQL](https://github.com/seita1996/rinyushoku/actions/workflows/codeql.yml/badge.svg)](https://github.com/seita1996/rinyushoku/actions/workflows/codeql.yml)
+[![ER Diagram](https://github.com/seita1996/rinyushoku/actions/workflows/er.yml/badge.svg)](https://github.com/seita1996/rinyushoku/actions/workflows/er.yml)
+[![Ruby on Rails CI](https://github.com/seita1996/rinyushoku/actions/workflows/rubyonrails.yml/badge.svg)](https://github.com/seita1996/rinyushoku/actions/workflows/rubyonrails.yml)
+
 離乳食のスケジュールを管理するシステムです
 
 現時点でログイン機能はなく、自宅のサーバーでホストする前提となっています
