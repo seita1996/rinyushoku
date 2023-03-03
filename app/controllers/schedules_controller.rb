@@ -24,7 +24,7 @@ class SchedulesController < ApplicationController
 
     respond_to do |format|
       if @schedule.save
-        format.html { redirect_to schedule_url(@schedule), notice: "Schedule was successfully created." }
+        format.html { redirect_to schedule_url(@schedule), notice: 'Schedule was successfully created.' }
         format.json { render :show, status: :created, location: @schedule }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -37,7 +37,7 @@ class SchedulesController < ApplicationController
   def update
     respond_to do |format|
       if @schedule.update(schedule_params)
-        format.html { redirect_to schedule_url(@schedule), notice: "Schedule was successfully updated." }
+        format.html { redirect_to schedule_url(@schedule), notice: 'Schedule was successfully updated.' }
         format.json { render :show, status: :ok, location: @schedule }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -51,7 +51,7 @@ class SchedulesController < ApplicationController
     @schedule.destroy
 
     respond_to do |format|
-      format.html { redirect_to schedules_url, notice: "Schedule was successfully destroyed." }
+      format.html { redirect_to schedules_url, notice: 'Schedule was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -60,9 +60,9 @@ class SchedulesController < ApplicationController
   def recalculate
     respond_to do |format|
       if RecalculateSchedule.call(day: params[:day], start_date: params[:start_date])
-        format.html { redirect_to schedules_url, notice: "スケジュールの再計算が完了しました" }
+        format.html { redirect_to schedules_url, notice: 'スケジュールの再計算が完了しました' }
       else
-        format.html { redirect_to schedules_url, alert: "スケジュールの再計算が失敗しました" }
+        format.html { redirect_to schedules_url, alert: 'スケジュールの再計算が失敗しました' }
       end
       format.json { head :no_content }
     end

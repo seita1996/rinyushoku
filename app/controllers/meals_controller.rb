@@ -1,5 +1,5 @@
 class MealsController < ApplicationController
-  before_action :set_meal, only: %i[ show edit update destroy ]
+  before_action :set_meal, only: %i[show edit update destroy]
 
   # GET /meals or /meals.json
   def index
@@ -7,8 +7,7 @@ class MealsController < ApplicationController
   end
 
   # GET /meals/1 or /meals/1.json
-  def show
-  end
+  def show; end
 
   # GET /meals/new
   def new
@@ -16,8 +15,7 @@ class MealsController < ApplicationController
   end
 
   # GET /meals/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /meals or /meals.json
   def create
@@ -25,7 +23,7 @@ class MealsController < ApplicationController
 
     respond_to do |format|
       if @meal.save
-        format.html { redirect_to meal_url(@meal), notice: "Meal was successfully created." }
+        format.html { redirect_to meal_url(@meal), notice: 'Meal was successfully created.' }
         format.json { render :show, status: :created, location: @meal }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +36,7 @@ class MealsController < ApplicationController
   def update
     respond_to do |format|
       if @meal.update(meal_params)
-        format.html { redirect_to meal_url(@meal), notice: "Meal was successfully updated." }
+        format.html { redirect_to meal_url(@meal), notice: 'Meal was successfully updated.' }
         format.json { render :show, status: :ok, location: @meal }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,7 +50,7 @@ class MealsController < ApplicationController
     @meal.destroy
 
     respond_to do |format|
-      format.html { redirect_to meals_url, notice: "Meal was successfully destroyed." }
+      format.html { redirect_to meals_url, notice: 'Meal was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -65,13 +63,14 @@ class MealsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_meal
-      @meal = Meal.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def meal_params
-      params.require(:meal).permit(:day, :ordinal_number)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_meal
+    @meal = Meal.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def meal_params
+    params.require(:meal).permit(:day, :ordinal_number)
+  end
 end

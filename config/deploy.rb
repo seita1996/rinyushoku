@@ -1,15 +1,15 @@
 # config valid for current version and patch releases of Capistrano
-lock "~> 3.17.1"
+lock '~> 3.17.1'
 
-set :application, "rinyushoku"
-set :repo_url, "https://github.com/seita1996/rinyushoku.git"
+set :application, 'rinyushoku'
+set :repo_url, 'https://github.com/seita1996/rinyushoku.git'
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
-set :branch, "main"
+set :branch, 'main'
 
 # Default deploy_to directory is /var/www/my_app_name
-set :deploy_to, "/var/www/prj/rinyushoku"
+set :deploy_to, '/var/www/prj/rinyushoku'
 
 # Default value for :format is :airbrussh.
 # set :format, :airbrussh
@@ -23,10 +23,11 @@ set :deploy_to, "/var/www/prj/rinyushoku"
 
 # Default value for :linked_files is []
 # append :linked_files, "config/database.yml"
-append :linked_files, ".env", "config/master.key"
+append :linked_files, '.env', 'config/master.key'
 
 # Default value for linked_dirs is []
-append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "tmp/webpacker", "public/system", "vendor", "storage"
+append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'tmp/webpacker', 'public/system', 'vendor',
+       'storage'
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
@@ -41,7 +42,7 @@ set :keep_releases, 3
 # set :ssh_options, verify_host_key: :secure
 
 set :rbenv_ruby, '3.1.3'
-set :rails_env, "production"
+set :rails_env, 'production'
 
 set :log_level, :debug
 

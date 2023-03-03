@@ -18,12 +18,20 @@ class ImportMealTemplate
   def check_file_format(file_path)
     raise StandardError, 'Only CSV file is allowed to be specified in file_path' if File.extname(file_path) != '.csv'
     raise StandardError, 'Empty CSV cannot be imported' if CSV.read(file_path)[0].nil?
-    raise StandardError, 'The type of day is invalid' unless CSV.read(file_path).transpose[0].drop(1).filter { |cell| !number?(cell) }.empty?
+    raise StandardError, 'The type of day is invalid' unless CSV.read(file_path).transpose[0].drop(1).filter do |cell|
+                                                               !number?(cell)
+                                                             end.empty?
   end
 
   def check_file_data(file_path)
     raise StandardError, 'There is missing data in the header' unless CSV.read(file_path)[0].filter(&:nil?).empty?
-    raise StandardError, 'There are lines where the amount of foods is not filled in' if CSV.read(file_path).drop(1).any? { |row| row.drop(1).all?(&:nil?) }
+
+    if CSV.read(file_path).drop(1).any? do |row|
+         row.drop(1).all?(&:nil?)
+       end
+      raise StandardError,
+            'There are lines where the amount of foods is not filled in'
+    end
   end
 
   def cleanup_template_and_schedule

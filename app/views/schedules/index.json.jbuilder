@@ -1,1 +1,1 @@
-json.array! @schedules, partial: "schedules/schedule", as: :schedule
+json.array! @schedules, partial: 'schedules/schedule', as: :schedule

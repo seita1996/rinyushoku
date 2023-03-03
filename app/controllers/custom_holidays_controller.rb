@@ -1,5 +1,5 @@
 class CustomHolidaysController < ApplicationController
-  before_action :set_custom_holiday, only: %i[ show edit update destroy ]
+  before_action :set_custom_holiday, only: %i[show edit update destroy]
 
   # GET /custom_holidays or /custom_holidays.json
   def index
@@ -7,8 +7,7 @@ class CustomHolidaysController < ApplicationController
   end
 
   # GET /custom_holidays/1 or /custom_holidays/1.json
-  def show
-  end
+  def show; end
 
   # GET /custom_holidays/new
   def new
@@ -16,8 +15,7 @@ class CustomHolidaysController < ApplicationController
   end
 
   # GET /custom_holidays/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /custom_holidays or /custom_holidays.json
   def create
@@ -25,7 +23,9 @@ class CustomHolidaysController < ApplicationController
 
     respond_to do |format|
       if @custom_holiday.save
-        format.html { redirect_to custom_holiday_url(@custom_holiday), notice: "Custom holiday was successfully created." }
+        format.html do
+          redirect_to custom_holiday_url(@custom_holiday), notice: 'Custom holiday was successfully created.'
+        end
         format.json { render :show, status: :created, location: @custom_holiday }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +38,9 @@ class CustomHolidaysController < ApplicationController
   def update
     respond_to do |format|
       if @custom_holiday.update(custom_holiday_params)
-        format.html { redirect_to custom_holiday_url(@custom_holiday), notice: "Custom holiday was successfully updated." }
+        format.html do
+          redirect_to custom_holiday_url(@custom_holiday), notice: 'Custom holiday was successfully updated.'
+        end
         format.json { render :show, status: :ok, location: @custom_holiday }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,19 +54,20 @@ class CustomHolidaysController < ApplicationController
     @custom_holiday.destroy
 
     respond_to do |format|
-      format.html { redirect_to custom_holidays_url, notice: "Custom holiday was successfully destroyed." }
+      format.html { redirect_to custom_holidays_url, notice: 'Custom holiday was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_custom_holiday
-      @custom_holiday = CustomHoliday.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def custom_holiday_params
-      params.require(:custom_holiday).permit(:date, :description)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_custom_holiday
+    @custom_holiday = CustomHoliday.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def custom_holiday_params
+    params.require(:custom_holiday).permit(:date, :description)
+  end
 end

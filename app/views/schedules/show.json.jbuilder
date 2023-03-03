@@ -1,1 +1,1 @@
-json.partial! "schedules/schedule", schedule: @schedule
+json.partial! 'schedules/schedule', schedule: @schedule
