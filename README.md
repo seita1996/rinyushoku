@@ -4,6 +4,7 @@
 [![CodeQL](https://github.com/seita1996/rinyushoku/actions/workflows/codeql.yml/badge.svg)](https://github.com/seita1996/rinyushoku/actions/workflows/codeql.yml)
 [![ER Diagram](https://github.com/seita1996/rinyushoku/actions/workflows/er.yml/badge.svg)](https://github.com/seita1996/rinyushoku/actions/workflows/er.yml)
 [![Ruby on Rails CI](https://github.com/seita1996/rinyushoku/actions/workflows/rubyonrails.yml/badge.svg)](https://github.com/seita1996/rinyushoku/actions/workflows/rubyonrails.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 離乳食のスケジュールを管理するシステムです
 
