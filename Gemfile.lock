@@ -124,7 +124,7 @@ GEM
     holiday_jp (0.8.1)
     i18n (1.12.0)
       concurrent-ruby (~> 1.0)
-    importmap-rails (1.1.5)
+    importmap-rails (1.1.6)
       actionpack (>= 6.0.0)
       railties (>= 6.0.0)
     interactor (3.1.2)
@@ -166,7 +166,7 @@ GEM
       net-protocol
     net-ssh (7.0.1)
     nio4r (2.5.9)
-    nokogiri (1.14.2-x86_64-linux)
+    nokogiri (1.14.3-x86_64-linux)
       racc (~> 1.4)
     parallel (1.23.0)
     parser (3.2.2.0)
