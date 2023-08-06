@@ -12,7 +12,7 @@ Rails.application.routes.draw do
       post :import
     end
   end
-  namespace 'api' do
+  namespace 'api', format: 'json' do
     namespace 'v1' do
       resources :schedules do
         collection do
