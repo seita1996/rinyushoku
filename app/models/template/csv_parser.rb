@@ -57,7 +57,7 @@ module Template
           debuted_food_ids << food_id
           return true
         end
-        return false
+        false
       end
 
       result = []
