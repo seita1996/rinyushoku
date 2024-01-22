@@ -2,8 +2,8 @@ name: "ER Diagram"
 on:
   push:
     branches: [ "main" ]
-    paths:
-      - "db/migrate/**"
+    # paths:
+    #   - "db/migrate/**"
 jobs:
   generate:
     runs-on: ubuntu-latest
@@ -12,7 +12,7 @@ jobs:
       DB_NAME: myapp_test
     services:
       db:
-        image: mysql:5.7
+        image: mysql:8.0
         ports:
           - 3306:3306
         env:
