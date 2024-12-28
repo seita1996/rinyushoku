@@ -41,7 +41,7 @@ set :keep_releases, 3
 # Uncomment the following to require manually verifying the host key before first deploy.
 # set :ssh_options, verify_host_key: :secure
 
-set :rbenv_ruby, '3.1.3'
+set :rbenv_ruby, '3.4.1'
 set :rails_env, 'production'
 
 set :log_level, :debug

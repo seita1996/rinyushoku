@@ -19,11 +19,11 @@ jobs:
         options: --health-cmd "mysqladmin ping" --health-interval 10s --health-timeout 5s --health-retries 10
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Install Ruby and gems
-        uses: ruby/setup-ruby@ee2113536afb7f793eed4ce60e8d3b26db912da4 # v1.127.0
+        uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.1.3
+          ruby-version: 3.4.1
           bundler-cache: true
       - name: Bundler and gem install
         run: |
@@ -42,11 +42,11 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Install Ruby and gems
-        uses: ruby/setup-ruby@ee2113536afb7f793eed4ce60e8d3b26db912da4 # v1.127.0
+        uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.1.3
+          ruby-version: 3.4.1
           bundler-cache: true
       - name: Run rubocop
         run: bundle exec rubocop
