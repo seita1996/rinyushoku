@@ -142,7 +142,8 @@ GEM
       actionpack (>= 6.0.0)
       activesupport (>= 6.0.0)
       railties (>= 6.0.0)
-    interactor (3.1.2)
+    interactor (3.2.0)
+      ostruct
     interactor-rails (2.3.0)
       interactor (~> 3.0)
       railties (>= 7.0)
@@ -382,7 +383,7 @@ DEPENDENCIES
   faker
   holiday_jp
   importmap-rails
-  interactor (~> 3.0)
+  interactor (~> 3.2)
   interactor-rails (~> 2.3)
   jbuilder
   mysql2 (~> 0.5)
