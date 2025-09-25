@@ -51,7 +51,7 @@ gem 'bootsnap', require: false
 gem 'csv'
 gem 'dotenv-rails'
 gem 'holiday_jp'
-gem 'interactor', '~> 3.0'
+gem 'interactor', '~> 3.2'
 gem 'interactor-rails', '~> 2.3'
 gem 'rack-cors'
 gem 'sd_notify'
