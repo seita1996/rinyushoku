@@ -97,10 +97,10 @@ GEM
     capistrano-rbenv (2.2.0)
       capistrano (~> 3.1)
       sshkit (~> 1.3)
-    capistrano3-puma (6.2.0)
+    capistrano3-puma (7.0.0)
       capistrano (~> 3.7)
       capistrano-bundler
-      puma (>= 5.1, < 7.0)
+      puma (>= 6.1, < 8.0)
     capybara (3.40.0)
       addressable
       matrix
@@ -206,7 +206,7 @@ GEM
       date
       stringio
     public_suffix (6.0.1)
-    puma (6.6.0)
+    puma (7.0.4)
       nio4r (~> 2.0)
     racc (1.8.1)
     rack (3.2.3)
@@ -388,7 +388,7 @@ DEPENDENCIES
   interactor-rails (~> 2.3)
   jbuilder
   mysql2 (~> 0.5)
-  puma (~> 6.6)
+  puma (~> 7.0)
   rack-cors
   rack-mini-profiler
   rails (~> 8.0.2)
