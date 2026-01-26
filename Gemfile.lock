@@ -210,7 +210,7 @@ GEM
       date
       stringio
     public_suffix (6.0.1)
-    puma (7.1.0)
+    puma (7.2.0)
       nio4r (~> 2.0)
     racc (1.8.1)
     rack (3.2.4)
@@ -395,7 +395,7 @@ DEPENDENCIES
   interactor-rails (~> 2.3)
   jbuilder
   mysql2 (~> 0.5)
-  puma (~> 7.1)
+  puma (~> 7.2)
   rack-cors
   rack-mini-profiler
   rails (~> 8.1.2)
